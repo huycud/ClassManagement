@@ -1,0 +1,104 @@
+﻿@using ClassManagement.Mvc.Models.Class
+@using Utilities.Common
+@model UpdateClassViewModel
+
+@{
+    Layout = "";
+
+    string idName = $"#{Model.Id}";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="UpdateClass" onsubmit="return jQueryPost('@idName',this,'Lớp học');" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Id" class="control-label"></label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">#</div>
+                    </div>
+                    <input asp-for="Id" class="form-control" type="text" readonly />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">#</div>
+                    </div>
+                    <input asp-for="Name" class="form-control" />
+                </div>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TeacherId" class="control-label"></label>
+                <div class="input-group">
+                    @await Component.InvokeAsync("RenderClientsByRoleName", new { roleName = RoleConstants.TEACHER_NAME, teacherId = Model.TeacherId })
+                </div>
+                <span asp-validation-for="TeacherId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Subject" class="control-label"></label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">#</div>
+                    </div>
+                    <input asp-for="Subject" class="form-control" type="text" readonly />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Scholastic" class="control-label"></label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">#</div>
+                    </div>
+                    <input asp-for="Scholastic" class="form-control" type="text" readonly />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="ClassSize" class="control-label"></label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">#</div>
+                    </div>
+                    <input asp-for="ClassSize" class="form-control" min="1" />
+                </div>
+                <span asp-validation-for="ClassSize" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StartedAt" class="control-label"></label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">#</div>
+                    </div>
+                    <input asp-for="StartedAt" class="form-control" type="date" />
+                </div>
+                <span asp-validation-for="StartedAt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EndedAt" class="control-label"></label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">#</div>
+                    </div>
+                    <input asp-for="EndedAt" class="form-control" type="date" />
+                </div>
+                <span asp-validation-for="EndedAt" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Type" class="control-label"></label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">#</div>
+                    </div>
+                    <input asp-for="Type" class="form-control" type="text" readonly />
+                </div>
+            </div>
+            <div class="form-group col-md-12 mt-3">
+                <input type="submit" value="Save" class="btn btn-danger ip-custom btn-custom" />
+            </div>
+        </form>
+    </div>
+</div>
+

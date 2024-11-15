@@ -1,0 +1,93 @@
+﻿@using ClassManagement.Mvc.Models.Common
+@model ClientClassesViewModel
+
+@{
+    ViewData["Title"] = "Danh sách lớp";
+
+    Layout = "_AdminLayout";
+}
+
+<div class="container">
+    <div class="card mt-3">
+        <div class="card-header" style="background-color: rgba(0, 0, 0, 0.03); height: 40px;">
+            <ol class="breadcrumb mb-3">
+                <li class="breadcrumb-item">
+                    <a asp-action="Index" asp-controller="Home">Bảng điều khiển</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a asp-action="Index" asp-controller="Admin">Danh sách</a>
+                </li>
+                <li class="breadcrumb-item active">
+                    @ViewData["Title"]
+                </li>
+            </ol>
+        </div>
+        <div class="custom-div">
+            <table class="card-body table table-striped table-hover">
+                <thead>
+                    <tr class="text-center">
+                        <th>@Html.DisplayNameFor(model => model.Client.Id)</th>
+                        <th>@Html.DisplayNameFor(model => model.Client.UserName)</th>
+                        <th>@Html.DisplayNameFor(model => model.Client.Email)</th>
+                        <th>Tên đầy đủ</th>
+                        <th>@Html.DisplayNameFor(model => model.Client.DateOfBirth)</th>
+                        <th>@Html.DisplayNameFor(model => model.Client.Gender)</th>
+                        <th>@Html.DisplayNameFor(model => model.Client.Address)</th>
+                        <th>@Html.DisplayNameFor(model => model.Client.DepartmentName)</th>
+                        <th class="custom-th">@Html.DisplayNameFor(model => model.Client.ImagePath)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="text-center subject-custom-td" id="class-detail">
+                        @await Html.PartialAsync("_ClientDetailPartialView", Model.Client)
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="card mt-3">
+        <div class="datatable-wrapper datatable-loading no-footer sortable searchable fixed-columns">
+            <form asp-action="GetClassesByClientId" asp-controller="Admin" method="get">
+                <div class="datatable-top">
+                    <div class="datatable-dropdown">
+                        <label>
+                            Sắp xếp theo
+                            <select name="sortOrder" class="datatable-selector" asp-items="@ViewBag.SortOrder" data-properties="sortOrder">
+                            </select>
+                        </label>
+                    </div>
+                    <div class="datatable-search">
+                        <input class="datatable-input" placeholder="Tìm kiếm..." type="text" name="keyword" value="@ViewBag.Keyword">
+                        <input class="btn btn-primary" type="submit" value="Tìm" style="margin-bottom:3px">
+                    </div>
+                </div>
+            </form>
+            <div class="datatable-container" id="partial-view-container">
+                <div class="custom-div" id="list-client">
+                    <table class="card-body table table-striped table-hover">
+                        <thead>
+                            <tr class="text-center">
+                                <th>Mã lớp</th>
+                                <th>Tên lớp</th>
+                                <th>Giáo viên</th>
+                                <th>Sỉ số</th>
+                                <th>Số lượng</th>
+                                <th>Hình thức</th>
+                                <th>Ngày bắt đầu</th>
+                                <th>Ngày kết thúc</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @await Html.PartialAsync("_GetClassesByClientIdPartialView", Model.Classes.Items)
+                        </tbody>
+                    </table>
+                </div>
+                <div class="datatable-bottom">
+                    <nav class="datatable-pagination">
+                        @await Component.InvokeAsync("AdminPager", Model.Classes)
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

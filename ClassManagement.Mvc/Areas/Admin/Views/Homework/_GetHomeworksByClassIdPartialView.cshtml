@@ -1,0 +1,14 @@
+﻿@using ClassManagement.Mvc.Models.Homework
+@model HomeworkViewModel
+
+<div class="datatable-container custom-div">
+    <span>@Model.Id</span>
+    <span>@Model.Title</span>
+    <span>@Model.Description</span>
+    <span>@Model.ClassName</span>
+    <span>@Model.CreatedAt.ToString("dd/MM/yyyy")</span>
+    <span>@Model.Status</span>
+    <span>@Model.StartedAt.ToString("dd/MM/yyyy")</span>
+    <span>@Model.EndedAt.ToString("dd/MM/yyyy")</span>
+    <span><a href="#">@(Model.FilePath ?? "")</a></span>
+</div>

@@ -1,0 +1,17 @@
+﻿@using ClassManagement.Mvc.Models.Page
+@using ClassManagement.Mvc.Models.Semester
+@model PageResultViewModel<SemesterViewModel>
+
+@foreach (var item in Model.Items ?? new List<SemesterViewModel> { })
+{
+    <tr class="text-center subject-custom-td" id="@item.Id">
+        <td style="width:15%">@item.Id</td>
+        <td style="width:25%">@item.Name</td>
+        <td>@item.UpdatedAt</td>
+        <td style="white-space: nowrap">
+            <a class="btn btn-success" onclick="showInPopup('@Url.Action("UpdateSemester","Semester",new {id=item.Id},Context.Request.Scheme)','Update')" style="margin-right:5px">
+                <i class="fa fa-edit" aria-hidden="true"></i>
+            </a>
+        </td>
+    </tr>
+}

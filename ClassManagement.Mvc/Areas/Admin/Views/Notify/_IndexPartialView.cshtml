@@ -1,0 +1,12 @@
+﻿@using ClassManagement.Mvc.Models.Notify
+@using ClassManagement.Mvc.Models.Page
+@model PageResultViewModel<NotifyViewModel>
+
+@foreach (var item in Model.Items)
+{
+    <li>
+        <a asp-action="GetNotifyById" asp-controller="Notify" asp-area="Admin" asp-route-id="@item.Id">
+            @item.Title - @item.CreatedAt.ToString("dd/MM/yyyy")
+        </a>
+    </li>
+}

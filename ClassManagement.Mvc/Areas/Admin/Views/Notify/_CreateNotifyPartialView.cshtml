@@ -1,0 +1,50 @@
+﻿@using static Utilities.Common.SystemConstants;
+@model ClassManagement.Mvc.Models.Notify.CreateNotifyViewModel
+
+
+<script type="importmap">
+    {
+        "imports": {
+                "ckeditor5": "https://cdn.ckeditor.com/ckeditor5/43.2.0/ckeditor5.js",
+                "ckeditor5/": "https://cdn.ckeditor.com/ckeditor5/43.2.0/"
+            }
+    }
+</script>
+<script type="module" src="~/assets/vendor/ckeditor5.js"></script>
+
+<form asp-action="CreateNotify" enctype="multipart/form-data" onsubmit="return jQueryOnCreate(this,'Thông báo','GetNotifiesByUserId');">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="row mb-3">
+        <div class="col-6">
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <div class="input-group">
+                    <textarea asp-for="Title" class="form-control" type="text" rows="1"></textarea>
+                </div>
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="form-group">
+                <label asp-for="Type" class="control-label"></label>
+                @Html.DropDownListFor(model => model.Type,
+                         ViewBag.NotifyTypes as SelectList,
+                         "----Loại----",
+                         new { @class = "form-select select-item" })
+                <span asp-validation-for="Type" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="form-group">
+            <label asp-for="Content" class="control-label"></label>
+            <textarea id="ck-content" asp-for="Content" class="form-control"></textarea>
+            <span asp-validation-for="Content" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-3">
+            <input type="submit" value="Tạo" class="btn btn-danger ip-custom btn-custom" />
+        </div>
+    </div>
+</form>

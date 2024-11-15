@@ -1,0 +1,60 @@
+﻿@using ClassManagement.Mvc.Models.Page
+@using ClassManagement.Mvc.Models.Notify
+@model PageResultViewModel<NotifyViewModel>
+
+@{
+    // Layout = "_AdminLayout";
+
+    var typeQuery = Context.Request.Query["type"].ToString();
+
+    string? notifyType = !string.IsNullOrEmpty(typeQuery) ? typeQuery : "";
+
+    var type = "";
+
+    if (notifyType.Equals("System"))
+    {
+        type = "Thông báo chung";
+    }
+    else if (notifyType.Equals("Class"))
+    {
+        type = "Thông báo lớp học";
+    }
+    else
+    {
+        type = "Thông báo phòng học";
+    }
+}
+
+<div class="container">
+    <div class="card mt-3">
+        <div class="card-header" style="background-color: rgba(0, 0, 0, 0.03); height: 40px;">
+            <ol class="breadcrumb mb-3">
+                <li class="breadcrumb-item">
+                    <a asp-action="Index" asp-controller="Home">Bảng điều khiển</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a asp-action="Index" asp-controller="Notify">Danh sách</a>
+                </li>
+                <li class="breadcrumb-item active">
+                    <span>@type</span>
+                </li>
+            </ol>
+        </div>
+        <div class="px-1">
+            <div class="item-list content-notify">
+                <h5 class="mt-3" style="color: blue">
+                    <span>@type.ToUpper()</span>
+                </h5>
+                <hr>
+                <ul class="li-custom">
+                    @await Html.PartialAsync("_IndexPartialView", Model)
+                    <div class="datatable-bottom">
+                        <nav class="datatable-pagination">
+                            @await Component.InvokeAsync("AdminPager", Model)
+                        </nav>
+                    </div>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

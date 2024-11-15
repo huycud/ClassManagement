@@ -1,0 +1,78 @@
+﻿@model ClassManagement.Mvc.Models.Clients.ClientViewModel
+@{
+    string birthdayConvert = Model.DateOfBirth.ToString("dd/MM/yyyy");
+
+    string updatedAtConvert = Model.UpdatedAt.ToString("dd/MM/yyyy HH:mm:ss");
+
+    var pathAvt = "";
+
+    if (string.IsNullOrEmpty(Model.ImagePath))
+    {
+        pathAvt = Model.Gender.ToString().ToUpper().Equals("MALE") ? "/assets/img/male.png" : "/assets/img/female.png";
+    }
+    else
+    {
+        pathAvt = Model.ImagePath;
+    }
+}
+<div class="row">
+    <div class="col-4 col-avatar">
+        <div class="avatar-container">
+            <img src="@pathAvt" alt="Ảnh đại diện" class="avatar" style="width:60%;height:70%;" />
+            <div class="update-button"><a onclick="showInPopup('@Url.Action("UpdateAvatar","Profile",new {id=Model.Id},Context.Request.Scheme)','Cập nhật ảnh đại diện')">Thay đổi ảnh</a></div>
+            <div class="col col-username">
+                <span style="font-size: x-large;">@Html.DisplayFor(model => model.UserName)</span>
+            </div>
+            <div class="col col-updatedat">
+                <span style="font-size: large;">Cập nhật lần cuối: @Html.DisplayFor(model => model.UpdatedAt)</span>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-8" style="margin-top: 15px">
+        <div style="margin-left: 40px">
+            <table class="table table-striped" style="margin-top: 25px;">
+                <tr>
+                    <th scope="row">@Html.DisplayNameFor(model => model.Email):</th>
+                    <th>@Html.DisplayFor(model => model.Email)</th>
+                </tr>
+                <tr>
+                    <th scope="row">Tên:</th>
+                    <th>@Html.DisplayFor(model => model.Firstname)</th>
+                </tr>
+                <tr>
+                    <th scope="row">Họ:</th>
+                    <th>@Html.DisplayFor(model => model.Lastname)</th>
+                </tr>
+                <tr>
+                    <th scope="row">Ngày sinh:</th>
+                    <th>@birthdayConvert</th>
+                </tr>
+                <tr>
+                    <th scope="row">Giới tính:</th>
+                    <th>@Html.DisplayFor(model => model.Gender)</th>
+                </tr>
+                <tr>
+                    <th scope="row">Khoa:</th>
+                    <th>@Html.DisplayFor(model => model.DepartmentName)</th>
+                </tr>
+                <tr>
+                    <th scope="row">Địa chỉ:</th>
+                    <th>@Html.DisplayFor(model => model.Address)</th>
+                </tr>
+            </table>
+            <div class="row">
+                <div class="col-6">
+                    <a class="btn btn-danger ip-custom btn-custom" onclick="showInPopup('@Url.Action("Update","Home",new {id=Model.Id},Context.Request.Scheme)','Cập nhật')">
+                        Cập nhật thông tin
+                    </a>
+                </div>
+                <div class="col-6 justify-content">
+                    <a class="btn btn-danger ip-custom btn-custom" onclick="showInPopup('@Url.Action("UpdatePassword","Home",new {id=Model.Id},Context.Request.Scheme)','Đổi mật khẩu')">
+                        Đổi mật khẩu
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,30 @@
+﻿@model ClassManagement.Mvc.Models.Class.ClassViewModel
+
+@* <table class="card-body table table-striped table-hover">
+    <thead>
+        <tr class="text-center">
+            <th>@Html.DisplayNameFor(model => model.Id)</th>
+            <th>@Html.DisplayNameFor(model => model.Name)</th>
+            <th>@Html.DisplayNameFor(model => model.TeacherItem)</th>
+            <th>@Html.DisplayNameFor(model => model.ClassSize)</th>
+            <th>@Html.DisplayNameFor(model => model.Amount)</th>
+            <th>@Html.DisplayNameFor(model => model.Type)</th>
+            <th>@Html.DisplayNameFor(model => model.StartedAt)</th>
+            <th>@Html.DisplayNameFor(model => model.EndedAt)</th>
+            <th>@Html.DisplayNameFor(model => model.UpdatedAt)</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="text-center subject-custom-td" id="class-detail"> *@
+<td>@Model.Id</td>
+<td>@Model.Name</td>
+<td>@Model.TeacherItem.Fullname</td>
+<td>@Model.ClassSize</td>
+<td>@Model.Amount</td>
+<td>@Model.Type</td>
+<td>@Model.StartedAt.ToString("dd/MM/yyyy")</td>
+<td>@Model.EndedAt.ToString("dd/MM/yyyy")</td>
+<td>@Model.UpdatedAt.ToString("dd/MM/yyyy")</td>
+@*  </tr>
+    </tbody>
+</table> *@

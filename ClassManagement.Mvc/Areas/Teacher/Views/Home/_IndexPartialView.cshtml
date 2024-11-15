@@ -1,0 +1,29 @@
+﻿@using ClassManagement.Mvc.Models.Page
+@using ClassManagement.Mvc.Models.Class
+@model PageResultViewModel<ClassViewModel>
+
+@foreach (var item in Model.Items)
+{
+    <tr class="text-center subject-custom-td">
+        <td>@item.Id</td>
+        <td>@item.Name</td>
+        <td>@item.TeacherItem.Fullname</td>
+        <td>@item.ClassSize</td>
+        <td>@item.Amount</td>
+        @if (item.Type.Equals("Practice"))
+        {
+            <td>Thực hành</td>
+        }
+        else
+        {
+            <td>Lý thuyết</td>
+        }
+        <td>@item.StartedAt.ToString("dd/MM/yyyy")</td>
+        <td>@item.EndedAt.ToString("dd/MM/yyyy")</td>
+        <td style="white-space: nowrap">
+            <a class="btn btn-success" asp-action="GetClassById" asp-controller="Class" asp-area="Admin" asp-route-id="@item.Id" style="margin-right:5px">
+                <i class="fa fa-eye" aria-hidden="true"></i>
+            </a>
+        </td>
+    </tr>
+}

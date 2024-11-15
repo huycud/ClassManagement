@@ -1,0 +1,45 @@
+﻿@model ClassManagement.Mvc.Models.Class.ClassViewModel
+
+@{
+    ViewData["Title"] = "Chi tiết";
+
+    Layout = "_AdminLayout";
+}
+
+<div class="container">
+    <div class="card mt-3">
+        <div class="card-header" style="background-color: rgba(0, 0, 0, 0.03); height: 40px;">
+            <ol class="breadcrumb mb-3">
+                <li class="breadcrumb-item">
+                    <a asp-action="Index" asp-controller="Home">Bảng điều khiển</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a asp-action="Index" asp-controller="Class">Danh sách</a>
+                </li>
+                <li class="breadcrumb-item active">
+                    @ViewData["Title"]
+                </li>
+            </ol>
+        </div>
+        <div class="custom-div" id="class-detail">
+            @await Html.PartialAsync("_ClassDetailPartialView", Model)
+        </div>
+        @*  @if (Model?.HomeworksId is null)
+        {
+        <div class="card-header" style="color:#0d6efd; opacity:0.75; padding-left:5px;">
+        <span>Hiện không có thông tin bài tập</span>
+        </div>
+        }
+        else
+        { *@
+        @* <div class="card mb-4">
+            <div class="card-header">
+                <i class="fa fa-list"></i>
+                Danh sách bài tập
+            </div>
+            <div class="datatable-wrapper datatable-loading no-footer sortable searchable fixed-columns" id="content-container">
+                
+            </div>
+        </div> *@
+    </div>
+</div>

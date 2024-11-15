@@ -1,0 +1,56 @@
+﻿@using ClassManagement.Mvc.Models.Notify
+@using ClassManagement.Mvc.Models.Page
+@model PageResultViewModel<NotifyViewModel>
+
+@{
+    var totalRecords = Model.TotalRecords;
+    var jsonModel = Model;
+}
+
+@foreach (var item in Model.Items ?? new List<NotifyViewModel> { })
+{
+    var type = item.Type switch
+    {
+        "System" => "Hệ thống",
+        "Class" => "Lớp học",
+        _ => "Phòng học"
+    };
+
+    <tr class="subject-custom-td" id="@item.Id">
+        <td>@item.Title</td>
+        <td>@type</td>
+        <td>@item.CreatedAt</td>
+        <td>@item.UpdatedAt</td>
+        <td style="white-space:nowrap; justify-content:center">
+            <div class="row justify-content-center">
+                <div class="col-3">
+                    <a class="btn btn-danger" asp-action="UpdateNotify" asp-route-id="@item.Id">
+                        <i class="fa fa-edit" aria-hidden="true"></i>
+                    </a>
+                </div>
+                <div class="col-3">
+                    <a class="btn btn-primary" asp-action="GetNotifyById" asp-controller="Notify" asp-route-id="@item.Id">
+                        <i class="fa fa-book"></i>
+                    </a>
+                </div>
+                <div class="col-3">
+                    <form class="change-status" method="post" asp-action="ChangeStatusNotify" asp-route-id="@item.Id" asp-route-isDeleted="true" data-confirm-message="Bạn có muốn xóa tạm thời thông báo này không?">
+                        <button type="submit" class="btn btn-danger">Xóa</button>
+                    </form>
+                </div>
+            </div>
+        </td>
+    </tr>
+}
+<script src="~/js/jquery-1.11.1.min.js"></script>
+<script src="~/js/notify.min.js"></script>
+<script>
+    if (@totalRecords > 0) {
+        $('.datatable-info').html('Tổng số: ' + @totalRecords);
+    } else {
+        $('.datatable-info').html(`<span style="opacity:0.75; color:#0d6efd">Hiện không có thông báo nào</span>`);
+    }
+
+    var pagerHtml = `@await Component.InvokeAsync("AdminPager", jsonModel)`;
+    $('.datatable-pagination').html(pagerHtml);
+</script>

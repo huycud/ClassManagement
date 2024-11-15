@@ -1,0 +1,50 @@
+﻿@using ClassManagement.Mvc.Models.Clients
+@model ClientViewModel
+
+
+<td>@Model.Id</td>
+<td>@Model.UserName</td>
+<td>@Model.Email</td>
+<td>@Model.DateOfBirth.ToString("dd/MM/yyyy")</td>
+@if (Model.Gender.ToUpper().Equals("MALE"))
+{
+    <td>Nam</td>
+}
+else
+{
+    <td>Nữ</td>
+}
+<td>@Model.Address</td>
+<td>@Model.DepartmentName</td>
+<td>
+    @if (string.IsNullOrEmpty(Model.ImagePath))
+    {
+        if (Model.Gender.ToUpper().Equals("MALE"))
+        {
+            <img src="~/assets/img/male.png" />
+        }
+        else
+        {
+            <img src="~/assets/img/female.png" />
+        }
+    }
+    else
+    {
+        <img src="@Model.ImagePath" />
+    }
+</td>
+<td style="white-space:nowrap; justify-content:center">
+    <div class="row justify-content-center">
+        <div class="col-4">
+            <a class="btn btn-danger" onclick="showInPopup('@Url.Action("UpdateClient","Admin",new {id=Model.Id},Context.Request.Scheme)','Cập nhật')">
+                <i class="fa fa-edit" aria-hidden="true"></i>
+            </a>
+        </div>
+        <div class="col-4">
+            <a class="btn btn-primary" asp-action="GetClassesByClientId" asp-route-id="@Model.Id">
+                <i class="fa fa-book-open" aria-hidden="true"></i>
+            </a>
+        </div>
+    </div>
+</td>
+

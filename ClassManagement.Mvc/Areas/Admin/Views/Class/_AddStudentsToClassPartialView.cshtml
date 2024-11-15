@@ -1,0 +1,39 @@
+﻿@using ClassManagement.Mvc.Models.Clients
+@using ClassManagement.Mvc.Models.Page
+@model PageResultViewModel<ClientViewModel>
+
+<form asp-action="AddStudentsToClass" id="addStudentsForm" onsubmit="return jQueryOnAdd(this,'AddStudentsToClass');">
+    <div class="custom-div" id="list-client">
+        <table class="card-body table table-striped table-hover">
+            <thead>
+                <tr class="text-center">
+                    <th>Mã</th>
+                    <th>Tên đăng nhập</th>
+                    <th>Email</th>
+                    <th>Ngày sinh</th>
+                    <th>Giới tính</th>
+                    <th>Địa chỉ</th>
+                    <th>Khoa</th>
+                    <th class="custom-th">Ảnh đại diện</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @await Html.PartialAsync("_StudentListPartialView", Model.Items)
+            </tbody>
+        </table>
+    </div>
+    <div class="datatable-bottom">
+        <div class="datatable-error">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        </div>
+        <nav class="datatable-pagination">
+            @await Component.InvokeAsync("AdminPager", Model)
+        </nav>
+    </div>
+    <div class="row justify-content-center" style="margin-bottom:10px">
+        <div class="form-group col-3">
+            <input type="submit" value="Thêm" class="btn btn-danger ip-custom btn-custom" />
+        </div>
+    </div>
+</form>

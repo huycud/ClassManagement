@@ -1,0 +1,37 @@
+﻿@using ClassManagement.Mvc.Models.Page
+@using ClassManagement.Mvc.Models.Clients
+@model PageResultViewModel<ClientViewModel>
+
+@foreach (var item in Model.Items)
+{
+    <tr class="text-center">
+        <td>@item.Id</td>
+        <td>@item.UserName</td>
+        <td>@item.Email</td>
+        <td>@item.DateOfBirth.ToString("dd/MM/yyyy")</td>
+        @if (item.Gender.ToUpper().Equals("MALE"))
+        {
+            <td>Nam</td>
+        }
+        else
+        {
+            <td>Nữ</td>
+        }
+        <td>@item.Address</td>
+        <td>@item.DepartmentName</td>
+        <td>
+            @if (string.IsNullOrEmpty(item.ImagePath) && item.Gender.ToUpper().Equals("MALE"))
+            {
+                <img src="~/assets/img/male.png" />
+            }
+            else if (string.IsNullOrEmpty(item.ImagePath) && item.Gender.ToUpper().Equals("FEMALE"))
+            {
+                <img src="~/assets/img/female.png" />
+            }
+            else
+            {
+                <img src="@item.ImagePath" />
+            }
+        </td>
+    </tr>
+}

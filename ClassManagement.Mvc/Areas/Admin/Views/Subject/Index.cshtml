@@ -1,0 +1,74 @@
+﻿@using ClassManagement.Mvc.Models.Page
+@using ClassManagement.Mvc.Models.Subject
+@model PageResultViewModel<SubjectViewModel>
+
+@{
+    ViewData["Title"] = "Danh sách";
+
+    Layout = "_AdminLayout";
+}
+
+<div class="container">
+    <div class="card mt-3">
+        <div class="card-header" style="background-color: rgba(0, 0, 0, 0.03); height: 40px;">
+            <ol class="breadcrumb mb-3">
+                <li class="breadcrumb-item">
+                    <a asp-action="Index" asp-controller="Home">Bảng điều khiển</a>
+                </li>
+                <li class="breadcrumb-item active">
+                    @ViewData["Title"]
+                </li>
+                <a class="create-item-icon" asp-action="CreateSubject" asp-controller="Subject"><i class="fa fa-plus"></i></a>
+            </ol>
+        </div>
+        <div class="datatable-wrapper datatable-loading no-footer sortable searchable fixed-columns">
+            <form asp-action="Index" method="get">
+                <div class="datatable-top">
+                    <div class="datatable-dropdown">
+                        <label>
+                            Lọc theo
+                            <select name="departmentId" class="datatable-selector select-item" asp-items="@ViewBag.Departments">
+                                <option value="">-----Khoa-----</option>
+                            </select>
+                        </label>
+                        <label>
+                            Sắp xếp
+                            <select name="sortOrder" class="datatable-selector" asp-items="@ViewBag.SortOrder"></select>
+                        </label>
+                    </div>
+                    <div class="datatable-search">
+                        <input class="datatable-input" placeholder="Tìm..." type="text" name="keyword" value="@ViewBag.Keyword">
+                        <input class="btn btn-primary" type="submit" value="Tìm" style="margin-bottom:3px">
+                    </div>
+                </div>
+            </form>
+            <div class="datatable-container">
+                <div class="custom-div item-freeze">
+                    <table class="card-body table table-striped table-hover">
+                        <thead>
+                            <tr class="text-center">
+                                <th>Mã môn học</th>
+                                <th>Tên môn học</th>
+                                <th>Mã khoa</th>
+                                <th>Số tín chỉ</th>
+                                <th>Trạng thái</th>
+                                <th>Hình thức</th>
+                                <th>Ngày cập nhật</th>
+                                <th>Lớp liên quan</th>
+                                <th>Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @await Html.PartialAsync("_IndexPartialView", Model.Items)
+                        </tbody>
+                    </table>
+                </div>
+                <div class="datatable-bottom">
+                    <nav class="datatable-pagination">
+                        @await Component.InvokeAsync("AdminPager", Model)
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

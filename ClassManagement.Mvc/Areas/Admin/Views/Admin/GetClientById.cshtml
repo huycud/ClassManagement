@@ -1,0 +1,50 @@
+﻿@* @using ClassManagement.Mvc.Models.Clients *@
+@using ClassManagement.Mvc.Models.Common
+@model ClientClassesViewModel
+
+@{
+    ViewData["Title"] = "Chi tiết";
+
+    Layout = "_AdminLayout";
+
+    string roleName = ViewBag.Type as string;
+}
+
+<div class="container">
+    <div class="card mt-3">
+        <div class="card-header" style="background-color: rgba(0, 0, 0, 0.03); height: 40px;">
+            <ol class="breadcrumb mb-3">
+                <li class="breadcrumb-item">
+                    <a asp-action="Index" asp-controller="Home">Bảng điều khiển</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a asp-action="Index" asp-controller="Admin">Danh sách</a>
+                </li>
+                <li class="breadcrumb-item active">
+                    @ViewData["Title"]
+                </li>
+            </ol>
+        </div>
+        <div class="custom-div" id="client-detail">
+            @await Html.PartialAsync("_ClientDetailPartialView", Model.Client)
+        </div>
+    </div>
+
+    <div class="card mt-3">
+        @if (roleName.Equals("TEACHER"))
+        {
+            <div class="card-header">
+                <i class="fa fa-list"></i>
+                Danh sách lớp đang dạy
+            </div>
+        }
+        else
+        {
+            <div class="card-header">
+                <i class="fa fa-list"></i>
+                Danh sách lớp đang học
+            </div>
+        }
+        @await Html.PartialAsync("~/Areas/Admin/Views/Class/_GetClassesByClientIdPartialView.cshtml", Model.Classes)
+    </div>
+</div>

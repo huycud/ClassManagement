@@ -1,0 +1,46 @@
+﻿@model ClassManagement.Mvc.Models.Notify.NotifyViewModel
+
+@{
+    ViewData["Title"] = "Chi tiết";
+
+    Layout = "_AdminLayout";
+
+    var type = "";
+
+    if (Model.Type.Equals("System"))
+    {
+        type = "Thông báo chung";
+    }
+    else if (Model.Type.Equals("Class"))
+    {
+        type = "Thông báo lớp học";
+    }
+    else
+    {
+        type = "Thông báo phòng học";
+    }
+}
+
+<div class="container">
+    <div class="card mt-3">
+        <div class="card-header" style="background-color: rgba(0, 0, 0, 0.03); height: 40px;">
+            <ol class="breadcrumb mb-3">
+                <li class="breadcrumb-item">
+                    <a asp-action="Index" asp-controller="Home">Bảng điều khiển</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a asp-action="Index" asp-controller="Notify">Danh sách</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a asp-action="GetListByType" asp-controller="Notify" asp-route-type="@Model.Type">@type</a>
+                </li>
+                <li class="breadcrumb-item active">
+                    @(Model.Title.Length <= 20 ? Model.Title : Model.Title.Substring(0, 20) + ".....")
+                </li>
+            </ol>
+        </div>
+        <div class="custom-div" id="notify-detail">
+            @await Html.PartialAsync("_NotifyDetailPartialView", Model)
+        </div>
+    </div>
+</div>

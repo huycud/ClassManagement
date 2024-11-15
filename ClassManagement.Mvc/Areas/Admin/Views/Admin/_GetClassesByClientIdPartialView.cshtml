@@ -1,0 +1,16 @@
+﻿@using ClassManagement.Mvc.Models.Class
+@model List<ClassViewModel>
+
+@foreach (var item in Model ?? new List<ClassViewModel> { })
+{
+    <tr class="text-center subject-custom-td">
+        <td>@item.Id</td>
+        <td>@item.Name</td>
+        <td>@item.ClassSize</td>
+        <td>@item.Amount</td>
+        <td>@item.Type</td>
+        <td>@item.StartedAt.ToString("dd/MM/yyyy")</td>
+        <td>@item.EndedAt.ToString("dd/MM/yyyy")</td>
+        <td>@item.UpdatedAt</td>
+    </tr>
+}

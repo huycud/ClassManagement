@@ -1,0 +1,107 @@
+﻿@using ClassManagement.Mvc.Models.Common
+@model ClassClientsViewModel
+@{
+    ViewData["Title"] = "Thêm vào lớp";
+
+    Layout = "_AdminLayout";
+}
+
+<div class="container">
+    <div class="card mt-3">
+        <div class="card-header" style="background-color: rgba(0, 0, 0, 0.03); height: 40px;">
+            <ol class="breadcrumb mb-3">
+                <li class="breadcrumb-item">
+                    <a asp-action="Index" asp-controller="Home">Bảng điều khiển</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a asp-action="Index" asp-controller="Class">Danh sách</a>
+                </li>
+                <li class="breadcrumb-item active">
+                    @ViewData["Title"]
+                </li>
+            </ol>
+        </div>
+        <div class="custom-div">
+            <table class="card-body table table-striped table-hover">
+                <thead>
+                    <tr class="text-center">
+                        <th>@Html.DisplayNameFor(model => model.Class.Id)</th>
+                        <th>@Html.DisplayNameFor(model => model.Class.Name)</th>
+                        <th>@Html.DisplayNameFor(model => model.Class.TeacherItem)</th>
+                        <th>@Html.DisplayNameFor(model => model.Class.ClassSize)</th>
+                        <th>@Html.DisplayNameFor(model => model.Class.Amount)</th>
+                        <th>@Html.DisplayNameFor(model => model.Class.Type)</th>
+                        <th>@Html.DisplayNameFor(model => model.Class.StartedAt)</th>
+                        <th>@Html.DisplayNameFor(model => model.Class.EndedAt)</th>
+                        <th>@Html.DisplayNameFor(model => model.Class.UpdatedAt)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="text-center subject-custom-td" id="class-detail">
+                        @await Html.PartialAsync("_ClassDetailPartialView", Model.Class)
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="card mt-3">
+        <div class="datatable-wrapper datatable-loading no-footer sortable searchable fixed-columns">
+            <form asp-action="Index" method="get">
+                <div class="datatable-top">
+                    <div class="datatable-dropdown">
+                        <label>
+                            Sắp xếp theo
+                            <select name="sortOrder" class="datatable-selector" asp-items="@ViewBag.SortOrder">
+                            </select>
+                        </label>
+                    </div>
+                    <div class="datatable-search">
+                        <input class="datatable-input" placeholder="Tìm..." type="text" name="Keyword" value="@ViewBag.Keyword">
+                        <input class="btn btn-primary" type="submit" value="Tìm" style="margin-bottom:3px">
+                    </div>
+                </div>
+            </form>
+            <div class="datatable-container">
+                <form asp-action="AddStudentsToClass" id="addStudentsForm" onsubmit="return jQueryOnAdd(this,'AddStudentsToClass');">
+                    <div class="custom-div" id="list-client">
+                        <table class="card-body table table-striped table-hover">
+                            <thead>
+                                <tr class="text-center">
+                                    <th>Mã</th>
+                                    <th>Tên đăng nhập</th>
+                                    <th>Email</th>
+                                    <th>Ngày sinh</th>
+                                    <th>Giới tính</th>
+                                    <th>Địa chỉ</th>
+                                    <th>Khoa</th>
+                                    <th class="custom-th">Ảnh đại diện</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @await Html.PartialAsync("_StudentListPartialView", Model.Clients.Items)
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="datatable-bottom">
+                        <div class="datatable-error">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        </div>
+                        <nav class="datatable-pagination">
+                            @await Component.InvokeAsync("AdminPager", Model.Clients)
+                        </nav>
+                    </div>
+                    <div class="row justify-content-center" style="margin-bottom:10px">
+                        <div class="form-group col-3">
+                            <input type="submit" value="Thêm" class="btn btn-danger ip-custom btn-custom" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* <script src="~/js/jquery-1.11.1.min.js"></script>
+<script src="~/js/site.js"></script>
+ *@

@@ -1,0 +1,119 @@
+﻿@using ClassManagement.Mvc.Models.Page
+@using ClassManagement.Mvc.Models.Notify
+@model Tuple<PageResultViewModel<NotifyViewModel>,PageResultViewModel<NotifyViewModel>,PageResultViewModel<NotifyViewModel>>
+
+@{
+    ViewData["Title"] = "Danh sách";
+
+    // Layout = "_AdminLayout";
+
+    string message = "Hiện không có thông báo";
+}
+
+<div class="container">
+    <div class="card mt-3">
+        <div class="card-header" style="background-color: rgba(0, 0, 0, 0.03); height: 40px;">
+            <ol class="breadcrumb mb-3">
+                <li class="breadcrumb-item">
+                    <a asp-action="Index" asp-controller="Home">Bảng điều khiển</a>
+                </li>
+                <li class="breadcrumb-item active">
+                    @ViewData["Title"]
+                </li>
+            </ol>
+        </div>
+        <div class="px-1">
+            <div class="item-list content-notify">
+                <div class="row">
+                    <div class="col-auto mr-auto">
+                        <h6 class="mt-3" style="color: blue">THÔNG BÁO CHUNG</h6>
+                    </div>
+                </div>
+                <hr>
+                <div class="wrap-list">
+                    @if (Model.Item1.TotalRecords == 0)
+                    {
+                        <span>@message</span>
+                    }
+                    else if (Model.Item1.TotalRecords > 5)
+                    {
+                        <ul class="li-custom">
+                            @await Html.PartialAsync("_IndexPartialView", Model.Item1)
+                            @* ================= *@
+                        </ul>
+                        <span class="wrap-item">
+                            <a asp-action="GetListByType" asp-route-type="System">Xem thêm >>></a>
+                        </span>
+                    }
+                    else
+                    {
+                        <ul class="li-custom">
+                            @await Html.PartialAsync("_IndexPartialView", Model.Item1)
+                            @* ================= *@
+                        </ul>
+                    }
+                </div>
+            </div>
+            <div class="item-list content-notify">
+                <div class="row">
+                    <div class="col-auto mr-auto">
+                        <h6 class="mt-3" style="color: blue">THÔNG BÁO LỚP HỌC</h6>
+                    </div>
+                </div>
+                @* <h5 class="mt-3" style="color: blue">THÔNG BÁO LỚP HỌC</h5> *@
+                <hr>
+                <div class="wrap-list">
+                    @if (Model.Item3.TotalRecords == 0)
+                    {
+                        <span style="opacity:0.75; color:#0d6efd">@message</span>
+                    }
+                    else if (Model.Item3.TotalRecords > 5)
+                    {
+                        <ul class="li-custom">
+                            @await Html.PartialAsync("_IndexPartialView", Model.Item3)
+                        </ul>
+                        <span class="wrap-item">
+                            <a asp-action="GetListByType" asp-route-type="Class">Xem thêm >>></a>
+                        </span>
+                    }
+                    else
+                    {
+                        <ul class="li-custom">
+                            @await Html.PartialAsync("_IndexPartialView", Model.Item3)
+                        </ul>
+                    }
+                </div>
+            </div>
+            <div class="item-list content-notify">
+                <div class="row">
+                    <div class="col-auto mr-auto">
+                        <h6 class="mt-3" style="color: blue">THÔNG BÁO PHÒNG HỌC</h6>
+                    </div>
+                </div>
+                @* <h5 class="mt-3" style="color: blue">THÔNG BÁO PHÒNG HỌC</h5> *@
+                <hr>
+                <div class="wrap-list">
+                    @if (Model.Item2.TotalRecords == 0)
+                    {
+                        <span style="opacity:0.75; color:#0d6efd">@message</span>
+                    }
+                    else if (Model.Item2.TotalRecords > 5)
+                    {
+                        <ul class="li-custom">
+                            @await Html.PartialAsync("_IndexPartialView", Model.Item2)
+                        </ul>
+                        <span class="wrap-item">
+                            <a asp-action="GetListByType" asp-route-type="Classroom">Xem thêm >>></a>
+                        </span>
+                    }
+                    else
+                    {
+                        <ul class="li-custom">
+                            @await Html.PartialAsync("_IndexPartialView", Model.Item2)
+                        </ul>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

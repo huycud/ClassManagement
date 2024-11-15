@@ -1,0 +1,24 @@
+﻿@using ClassManagement.Mvc.Models.Subject
+@model SubjectViewModel
+
+<td>@Model.Id</td>
+<td style="width:15%">@Model.Name</td>
+<td>@Model.DepartmentId</td>
+<td>@Model.Credit</td>
+<td>@Model.Status</td>
+<td>@Model.IsPracticed</td>
+<td>@Model.UpdatedAt</td>
+<td style="white-space:nowrap; justify-content:center">
+    <div class="row justify-content-center">
+        <div class="col-4">
+            <a class="btn btn-danger" onclick="showInPopup('@Url.Action("UpdateSubject","Subject",new {id=Model.Id},Context.Request.Scheme)','Cập nhật')">
+                <i class="fa fa-edit" aria-hidden="true"></i>
+            </a>
+        </div>
+        <div class="col-4">
+            <a class="btn btn-primary" asp-action="GetClassesBySubjectId" asp-route-id="@Model.Id">
+                <i class="fas fa-user fa-fw"></i>
+            </a>
+        </div>
+    </div>
+</td>

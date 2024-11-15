@@ -1,0 +1,78 @@
+﻿@using ClassManagement.Mvc.Models.Page
+@using ClassManagement.Mvc.Models.Class
+@model PageResultViewModel<ClassViewModel>
+
+@{
+    ViewData["Title"] = "Danh sách lớp dạy";
+
+    Layout = "_TeacherLayout";
+}
+
+<div class="container">
+    <div class="card mt-3">
+        <div class="card-header" style="background-color: rgba(0, 0, 0, 0.03); height: 40px;">
+            <ol class="breadcrumb mb-3">
+                <li class="breadcrumb-item">
+                    <a asp-action="Index" asp-controller="Home">Bảng điều khiển</a>
+                </li>
+                <li class="breadcrumb-item active">
+                    @ViewData["Title"]
+                </li>
+            </ol>
+        </div>
+        <div class="datatable-wrapper datatable-loading no-footer sortable searchable fixed-columns" style="overflow-y:auto">
+            <form asp-action="Index" method="get">
+                <div class="datatable-top" style="padding:3px 10px">
+                    <div class="datatable-dropdown">
+                        <label>
+                            Sắp xếp
+                            <select name="sortOrder" class="datatable-selector" asp-items="@ViewBag.SortOrder"></select>
+                        </label>
+                    </div>
+                    <div class="datatable-search">
+                        <input class="datatable-input" placeholder="Tìm....." type="text" name="Keyword" value="@ViewBag.Keyword">
+                        <input class="btn btn-primary" type="submit" value="Tìm" style="margin-bottom:3px">
+                    </div>
+                </div>
+            </form>
+            <div class="datatable-container">
+                @if (Model.Items is null)
+                {
+                    <div class="item-list" style="color:#0d6efd; opacity:0.75; padding-left:5px;">
+                        <div class="wrap-list">
+                            <span>Không có thông tin lớp học</span>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="custom-div">
+                        <table class="card-body table table-striped table-hover">
+                            <thead>
+                                <tr class="text-center">
+                                    <th>Mã lớp</th>
+                                    <th>Tên lớp</th>
+                                    <th>Giáo viên</th>
+                                    <th>Sỉ số</th>
+                                    <th>Tham gia</th>
+                                    <th>Hình thức</th>
+                                    <th>Ngày bắt đầu</th>
+                                    <th>Ngày kết thúc</th>
+                                    <th>Hành động</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @await Html.PartialAsync("_IndexPartialView", Model)
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="datatable-bottom">
+                        <nav class="datatable-pagination">
+                            @await Component.InvokeAsync("TeacherPager", Model)
+                        </nav>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,11 @@
+﻿@using ClassManagement.Mvc.Models.Semester
+@model SemesterViewModel
+
+<td style="width:15%">@Model.Id</td>
+<td style="width:25%">@Model.Name</td>
+<td>@Model.UpdatedAt</td>
+<td style="white-space: nowrap">
+    <a class="btn btn-success" onclick="showInPopup('@Url.Action("UpdateSemester","Semester",new {id=Model.Id},Context.Request.Scheme)','Update')" style="margin-right:5px">
+        <i class="fa fa-edit" aria-hidden="true"></i>
+    </a>
+</td>

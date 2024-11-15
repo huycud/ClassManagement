@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Confirmation Successful</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            background-color: #f0f8ff;
+        }
+
+        .container {
+            display: inline-block;
+            padding: 20px;
+            border: 2px solid #4CAF50;
+            border-radius: 8px;
+            background-color: #e6ffed;
+        }
+
+        h1 {
+            color: #4CAF50;
+        }
+
+        p {
+            color: #333;
+        }
+
+        #countdown {
+            font-weight: bold;
+            color: #4CAF50;
+        }
+    </style>
+    <script src="./js/site.js"></script>
+    <script>
+        window.onload = function () {
+            const redirectUrl = '@Url.Action("Login", "Account")';
+            startCountdown("countdown", redirectUrl);
+        };
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Confirmation Successful!</h1>
+        <p>Your email has been successfully confirmed. Thank you for verifying your email address.</p>
+        <p>You will be redirected to the login page in <span id="countdown">5</span> seconds.</p>
+    </div>
+</body>
+</html>

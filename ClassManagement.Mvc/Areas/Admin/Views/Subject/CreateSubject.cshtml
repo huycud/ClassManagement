@@ -1,0 +1,110 @@
+﻿@using Utilities.Enums
+@using static Utilities.Enums.EnumTypes
+@model ClassManagement.Mvc.Models.Subject.CreateSubjectViewModel
+
+@{
+    ViewData["Title"] = "Tạo mới";
+
+    Layout = "_AdminLayout";
+}
+
+<div class="container">
+    <div class="card mt-3">
+        <div class="card-header" style="background-color: rgba(0, 0, 0, 0.03); height: 40px;">
+            <ol class="breadcrumb mb-3">
+                <li class="breadcrumb-item">
+                    <a asp-action="Index" asp-controller="Home">Bảng điều khiển</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a asp-action="Index" asp-controller="Subject">Danh sách</a>
+                </li>
+                <li class="breadcrumb-item active">
+                    @ViewData["Title"]
+                </li>
+            </ol>
+        </div>
+        <div class="card-body">
+            <form asp-action="CreateSubject" enctype="multipart/form-data" onsubmit="return jQueryOnCreate(this,'Subject','Index');">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Id" class="control-label"></label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">#</div>
+                                </div>
+                                <input asp-for="Id" class="form-control" type="text" />
+                            </div>
+                            <span asp-validation-for="Id" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Name" class="control-label"></label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">#</div>
+                                </div>
+                                <input asp-for="Name" class="form-control" type="text" />
+                            </div>
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="DepartmentId" class="control-label"></label>
+                            <div class="input-group">
+                                @await Component.InvokeAsync("RenderDepartments")
+                            </div>
+                            <span asp-validation-for="DepartmentId" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label asp-for="Credit" class="control-label"></label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">#</div>
+                                </div>
+                                <input asp-for="Credit" class="form-control" type="number" min="1" />
+                            </div>
+                            <span asp-validation-for="Credit" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label asp-for="IsPracticed" class="control-label"></label>
+                            <select asp-for="IsPracticed" class="form-control">
+                                <option value="">---Có thực hành hay không ?---</option>
+                                <option value="true">Có</option>
+                                <option value="false">Không</option>
+                            </select>
+                            <span asp-validation-for="IsPracticed" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label asp-for="Status" class="control-label"></label>
+                            @Html.DropDownListFor(model => model.Status,
+                                     new SelectList(Enum.GetValues(typeof(Status))),
+                                     "---Trạng thái---",
+                                     new { @class = "form-control" })
+                            <span asp-validation-for="Status" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="form-group col-3">
+                        <input type="submit" value="Tạo" class="btn btn-danger ip-custom btn-custom" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

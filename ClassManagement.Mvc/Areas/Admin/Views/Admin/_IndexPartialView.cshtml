@@ -1,0 +1,51 @@
+﻿@using ClassManagement.Mvc.Models.Clients
+@using ClassManagement.Mvc.Models.Page
+@model List<ClientViewModel>
+
+@foreach (var item in Model ?? new List<ClientViewModel> { })
+{
+    <tr class="text-center" id="@item.UserName">
+        <td>@item.Id</td>
+        <td>@item.UserName</td>
+        <td>@item.Email</td>
+        <td>@item.DateOfBirth.ToString("dd/MM/yyyy")</td>
+        @if (item.Gender.ToUpper().Equals("MALE"))
+        {
+            <td>Nam</td>
+        }
+        else
+        {
+            <td>Nữ</td>
+        }
+        <td>@item.Address</td>
+        <td>@item.DepartmentName</td>
+        <td>
+            @if (string.IsNullOrEmpty(item.ImagePath) && item.Gender.ToUpper().Equals("MALE"))
+            {
+                <img src="~/assets/img/male.png" />
+            }
+            else if (string.IsNullOrEmpty(item.ImagePath) && item.Gender.ToUpper().Equals("FEMALE"))
+            {
+                <img src="~/assets/img/female.png" />
+            }
+            else
+            {
+                <img src="@item.ImagePath" />
+            }
+        </td>
+        <td style="white-space:nowrap; justify-content:center">
+            <div class="row justify-content-center">
+                <div class="col-4">
+                    <a class="btn btn-danger" onclick="showInPopup('@Url.Action("UpdateClient","Admin",new {id=item.Id},Context.Request.Scheme)','Cập nhật')">
+                        <i class="fa fa-edit" aria-hidden="true"></i>
+                    </a>
+                </div>
+                <div class="col-4">
+                    <a class="btn btn-primary" asp-action="GetClassesByClientId" asp-route-id="@item.Id">
+                        <i class="fa fa-book-open" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </div>
+        </td>
+    </tr>
+}

@@ -1,0 +1,7 @@
+﻿@using ClassManagement.Mvc.Models.Homework
+@model List<HomeworkViewModel>
+
+@foreach (var item in Model ?? new List<HomeworkViewModel>())
+{
+    <option value="@item.Id">@item.Title</option>
+}

@@ -1,0 +1,47 @@
+﻿@using ClassManagement.Mvc.Models.Class
+@using ClassManagement.Mvc.Models.Page
+@model PageResultViewModel<ClassViewModel>
+
+<div class="datatable-wrapper datatable-loading no-footer sortable searchable fixed-columns">
+    <form asp-action="Index">
+        <div class="datatable-top" style="padding:3px 10px">
+            <div class="datatable-dropdown">
+                <label>
+                    Sắp xếp
+                    <select name="sortOrder" class="datatable-selector" asp-items="@ViewBag.SortOrder"></select>
+                </label>
+            </div>
+            <div class="datatable-search">
+                <input class="datatable-input" placeholder="Tìm..." type="text" name="Keyword" value="@ViewBag.Keyword">
+                <input class="btn btn-primary" type="submit" value="Tìm" style="margin-bottom:3px">
+            </div>
+        </div>
+    </form>
+    <div class="datatable-container">
+        <div class="custom-div" id="list-client">
+            <table class="card-body table table-striped table-hover">
+                <thead>
+                    <tr class="text-center">
+                        <th>Mã lớp</th>
+                        <th>Tên lớp</th>
+                        <th>Sỉ số</th>
+                        <th>Tham gia</th>
+                        <th>Hình thức</th>
+                        <th>Ngày bắt đầu</th>
+                        <th>Ngày kết thúc</th>
+                        <th>Cập nhật</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @await Html.PartialAsync("_IndexPartialView", Model)
+                </tbody>
+            </table>
+        </div>
+        <div class="datatable-bottom">
+            <nav class="datatable-pagination">
+                @await Component.InvokeAsync("AdminPager", Model)
+            </nav>
+        </div>
+    </div>
+</div>

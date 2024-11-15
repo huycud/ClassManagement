@@ -1,0 +1,78 @@
+﻿@using ClassManagement.Mvc.Models.Notify
+@using ClassManagement.Mvc.Models.Page
+@model PageResultViewModel<NotifyViewModel>
+
+@{
+    ViewData["Title"] = "Danh sách đã tạo";
+}
+
+<div class="container">
+    <div class="card mt-3">
+        <div class="card-header" style="background-color: rgba(0, 0, 0, 0.03); height: 40px;">
+            <ol class="breadcrumb mb-3">
+                <li class="breadcrumb-item active">
+                    @ViewData["Title"]
+                </li>
+                <a class="create-item-icon" asp-action="CreateNotify" asp-controller="Notify"><i class="fa fa-plus"></i></a>
+            </ol>
+        </div>
+        <div class="datatable-wrapper datatable-loading no-footer sortable searchable fixed-columns">
+            <form asp-action="GetNotifiesByUserId" method="get">
+                <div class="datatable-top">
+                    <div class="datatable-dropdown">
+                        <label>
+                            Lọc
+                            <select name="type" class="datatable-selector select-item dropdown" asp-items="@ViewBag.Types">
+                                <option value="">----Loại----</option>
+                            </select>
+                        </label>
+                        <label>
+                            Sắp xếp
+                            <select name="sortOrder" class="datatable-selector" asp-items="@ViewBag.SortOrder"></select>
+                        </label>
+                    </div>
+                    <div class="datatable-search">
+                        <input class="datatable-input" placeholder="Tìm....." type="text" name="Keyword" value="@ViewBag.Keyword">
+                        <input class="btn btn-primary" type="submit" value="Tìm" style="margin-bottom:3px">
+                    </div>
+                </div>
+            </form>
+            <div class="datatable-container">
+                <div class="custom-div">
+                    <table class="card-body table table-striped table-hover">
+                        <thead>
+                            <tr class="text-center">
+                                <th>Tiêu đề</th>
+                                <th>Loại</th>
+                                <th>Ngày tạo</th>
+                                <th>Ngày cập nhật</th>
+                                <th>Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody id="get-notifies-by-user">
+                            @await Html.PartialAsync("_GetNotifiesByUserIdPartialView", Model)
+                        </tbody>
+                    </table>
+                </div>
+                <div class="datatable-bottom">
+                    @if (Model.TotalRecords > 0)
+                    {
+                        <div class="datatable-info">
+                            Tổng số: @Model.TotalRecords
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="datatable-info">
+                            <span style="opacity:0.75; color:#0d6efd">Hiện không có thông báo nào</span>
+                        </div>
+                    }
+                    <nav class="datatable-pagination">
+                        @await Component.InvokeAsync("AdminPager", Model)
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

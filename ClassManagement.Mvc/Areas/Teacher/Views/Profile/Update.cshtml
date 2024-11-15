@@ -1,0 +1,47 @@
+﻿@model ClassManagement.Mvc.Models.Clients.UpdateClientViewModel
+
+@{
+    Layout = "";
+
+    string dateConvert = Model.DateOfBirth?.ToString("dd/MM/yyyy");
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Update" onsubmit="return jQueryPost('#profile',this,'Profile');">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Firstname" class="control-label"></label>
+                <div class="input-group">
+                    <input asp-for="Firstname" class="form-control" type="text" readonly />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Lastname" class="control-label"></label>
+                <div class="input-group">
+                    <input asp-for="Lastname" class="form-control" type="text" readonly />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateOfBirth" class="control-label"></label>
+                <input asp-for="@dateConvert" class="form-control" type="date" readonly />
+            </div>
+            <div class="form-group">
+                <label asp-for="DepartmentName" class="control-label"></label>
+                <div class="input-group">
+                    <input asp-for="DepartmentName" class="form-control" type="text" readonly />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Address" class="control-label"></label>
+                <div class="input-group">
+                    <input asp-for="Address" class="form-control" />
+                </div>
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-12 mt-3">
+                <input type="submit" value="Lưu" class="btn btn-danger ip-custom btn-custom" />
+            </div>
+        </form>
+    </div>
+</div>

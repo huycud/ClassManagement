@@ -1,0 +1,119 @@
+﻿@using Utilities.Common
+@using static Utilities.Enums.EnumTypes
+@using static Utilities.Common.RoleConstants
+@model ClassManagement.Mvc.Models.Class.CreateClassViewModel
+
+<form asp-action="CreateClass" enctype="multipart/form-data" onsubmit="return jQueryOnCreate(this,'Class','Index');">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="Id" class="control-label"></label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">#</div>
+                    </div>
+                    <input asp-for="Id" class="form-control" type="text" />
+                </div>
+                <span asp-validation-for="Id" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">#</div>
+                    </div>
+                    <input asp-for="Name" class="form-control" type="text" />
+                </div>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="SubjectId" class="control-label"></label>
+                <div class="input-group">
+                    @await Component.InvokeAsync("RenderSubjects", new { subjectId = Model.SubjectId })
+                </div>
+                <span asp-validation-for="SubjectId" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="TeacherId" class="control-label"></label>
+                <div class="input-group">
+                    @await Component.InvokeAsync("RenderClientsByRoleName", new { roleName = RoleConstants.TEACHER_NAME, teacherId = Model.TeacherId })
+                </div>
+                <span asp-validation-for="TeacherId" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-3">
+            <div class="form-group">
+                <label asp-for="ScholasticId" class="control-label"></label>
+                <div class="input-group">
+                    @await Component.InvokeAsync("RenderScholastics", new { scholasticId = Model.ScholasticId })
+                </div>
+                <span asp-validation-for="ScholasticId" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label asp-for="ClassType" class="control-label"></label>
+                @Html.DropDownListFor(model => model.ClassType,
+                         new SelectList(Enum.GetValues(typeof(ClassType))),
+                         "---Hình thức---",
+                         new { @class = "form-select select-item", @onchange = "toggleClassTypeInput()" })
+                <span asp-validation-for="ClassType" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label asp-for="StartedAt" class="control-label"></label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">#</div>
+                    </div>
+                    <input asp-for="StartedAt" class="form-control" type="date" />
+                </div>
+                <span asp-validation-for="StartedAt" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="form-group">
+                <label asp-for="EndedAt" class="control-label"></label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">#</div>
+                    </div>
+                    <input asp-for="EndedAt" class="form-control" type="date" />
+                </div>
+                <span asp-validation-for="EndedAt" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-3">
+            <div class="form-group" id="ClassSizeInput">
+                <label asp-for="ClassSize" class="control-label"></label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">#</div>
+                    </div>
+                    <input asp-for="ClassSize" class="form-control" type="number" min="0" />
+                </div>
+                <span asp-validation-for="ClassSize" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="form-group col-3">
+            <input type="submit" value="Tạo" class="btn btn-danger ip-custom btn-custom" />
+        </div>
+    </div>
+</form>
+

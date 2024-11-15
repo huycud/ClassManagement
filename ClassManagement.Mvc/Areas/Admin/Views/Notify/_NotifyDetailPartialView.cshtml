@@ -1,0 +1,21 @@
+﻿@using ClassManagement.Mvc.Models.Notify
+@model NotifyViewModel
+
+<div class="container-fluid px-4">
+    <div id="content-wrapper" class="content-wrapper">
+        <div id="content-head" class="row-fluid content-head notify-detail">
+            <h4 class="title" id="page-title">@Model.Title</h4>
+            <span>@Model.CreatedAt.ToString("dd/MM/yyyy hh:MM")</span>
+        </div>
+
+        <div id="content-body" class="row-fluid content-body">
+            @await Component.InvokeAsync("RenderWhoCreateNews", Model.UserId.ToString())
+            @Html.Raw(Model.Content)
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-3">
+            <a asp-action="UpdateNotify" asp-route-id="@Model.Id" class="btn btn-danger ip-custom btn-custom">Cập nhật</a>
+        </div>
+    </div>
+</div>

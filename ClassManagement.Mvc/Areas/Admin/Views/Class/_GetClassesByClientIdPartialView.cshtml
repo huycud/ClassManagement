@@ -1,0 +1,61 @@
+﻿@using ClassManagement.Mvc.Models.Class
+@using ClassManagement.Mvc.Models.Page
+@model PageResultViewModel<ClassViewModel>
+
+<div class="datatable-wrapper datatable-loading no-footer sortable searchable fixed-columns">
+    <form asp-action="Index">
+        <div class="datatable-top">
+            <div class="datatable-dropdown">
+                <label>
+                    Sắp xếp
+                    <select name="sortOrder" class="datatable-selector" asp-items="@ViewBag.SortOrder"></select>
+                </label>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="datatable-container">
+    <div class="custom-div" id="list-client">
+        <table class="card-body table table-striped table-hover">
+            <thead>
+                <tr class="text-center">
+                    <th>Mã lớp</th>
+                    <th>Tên lớp</th>
+                    <th>Sỉ số</th>
+                    <th>Tham gia</th>
+                    <th>Hình thức</th>
+                    <th>Ngày bắt đầu</th>
+                    <th>Ngày kết thúc</th>
+                    <th>Cập nhật</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Items)
+                {
+                    <tr class="text-center subject-custom-td">
+                        <td>@item.Id</td>
+                        <td>@item.Name</td>
+                        <td>@item.ClassSize</td>
+                        <td>@item.Amount</td>
+                        @if (item.Type.Equals("Practice"))
+                        {
+                            <td>Thực hành</td>
+                        }
+                        else
+                        {
+                            <td>Lý thuyết</td>
+                        }
+                        <td>@item.StartedAt.ToString("dd/MM/yyyy")</td>
+                        <td>@item.EndedAt.ToString("dd/MM/yyyy")</td>
+                        <td>@item.UpdatedAt</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="datatable-bottom">
+        <nav class="datatable-pagination">
+            @await Component.InvokeAsync("AdminPager", Model)
+        </nav>
+    </div>
+</div>

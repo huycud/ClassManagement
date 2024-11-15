@@ -1,0 +1,54 @@
+﻿@using ClassManagement.Mvc.Models.Notify
+@using ClassManagement.Mvc.Models.Page
+@model PageResultViewModel<NotifyViewModel>
+
+@foreach (var item in Model.Items ?? new List<NotifyViewModel> { })
+{
+    var type = item.Type switch
+    {
+        "System" => "Hệ thống",
+        "Class" => "Lớp học",
+        _ => "Phòng học"
+    };
+
+    <tr class="subject-custom-td" id="@item.Id">
+        <td>@item.Title</td>
+        <td>@type</td>
+        <td>@item.CreatedAt</td>
+        <td>@item.UpdatedAt</td>
+        <td style="white-space:nowrap; justify-content:center">
+            <div class="row justify-content-center">
+                <div class="col-3">
+                    <a class="btn btn-primary" asp-action="GetNotifyById" asp-controller="Notify" asp-route-id="@item.Id">
+                        <i class="fa fa-book"></i>
+                    </a>
+                </div>
+                <div class="col-3">
+                    <form class="change-status" method="post" asp-action="DeleteNotify" asp-route-id="@item.Id" data-confirm-message="Bạn có chắc chắn muốn xóa vĩnh viễn thông báo này không?">
+                        <button type="submit" class="btn btn-danger"> <i class="fa fa-trash"></i></button>
+                    </form>
+                </div>
+                <div class="col-3">
+                    <form class="change-status" method="post" asp-action="ChangeStatusNotify" asp-route-id="@item.Id" data-confirm-message="Bạn có muốn khôi phục thông báo này không?">
+                        <input type="hidden" name="IsDeleted" value="false" />
+                        <button type="submit" class="btn btn-warning"><i class="fa fa-undo"></i></button>
+                    </form>
+                </div>
+            </div>
+
+        </td>
+    </tr>
+}
+<script src="~/js/jquery-1.11.1.min.js"></script>
+<script src="~/js/notify.min.js"></script>
+<script>
+    var totalRecords = @Model.TotalRecords;
+    if (totalRecords > 0) {
+        $('.datatable-info').html('Tổng số: ' + totalRecords);
+    } else {
+        $('.datatable-info').html(`<span style="opacity:0.75; color:#0d6efd">Hiện không có thông báo nào</span>`);
+    }
+
+    var pagerHtml = `@await Component.InvokeAsync("AdminPager", Model)`;
+    $('.datatable-pagination').html(pagerHtml);
+</script>

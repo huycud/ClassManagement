@@ -1,0 +1,10 @@
+﻿@model ClassManagement.Mvc.Models.Clients.ClientViewModel
+
+@if (Model.Id == 0)
+{
+    <span></span>
+}
+else
+{
+    <span>Người tạo: @Model.Lastname + @Model.Firstname</span>
+}

@@ -1,0 +1,109 @@
+﻿@using Utilities.Enums
+@using static Utilities.Enums.EnumTypes
+@model ClassManagement.Mvc.Models.Subject.UpdateSubjectViewModel
+
+@{
+    Layout = "";
+
+    var isExistClass = Model.ClassesId ?? new List<string>();
+
+    string idName = $"#{Model.Id}";
+
+    var statusList = new Dictionary<Status, string>
+    {
+        { Status.Opening, "Đang mở" },
+        { Status.Closed, "Đã đóng" }
+    };
+
+    var selectList = new List<SelectListItem>
+    {
+        new() { Text = "Có thực hành", Value = "Có thực hành", Selected = Model.IsPracticed == "Có thực hành" },
+
+        new() { Text = "Lý thuyết", Value = "Lý thuyết", Selected = Model.IsPracticed == "Lý thuyết" }
+    };
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="UpdateSubject" onsubmit="return jQueryPost('@idName',this,'Môn học');" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Id" class="control-label"></label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">#</div>
+                    </div>
+                    <input asp-for="Id" class="form-control" type="text" readonly />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">#</div>
+                    </div>
+                    <input asp-for="Name" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Status" class="control-label"></label>
+                @Html.DropDownListFor(model => model.Status,
+                         new SelectList(statusList, "Key", "Value", Model.Status),
+                         "----Trạng thái----",
+                         new { @class = "form-control select-item" })
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Credit" class="control-label"></label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">#</div>
+                    </div>
+                    <input asp-for="Credit" class="form-control" min="1" />
+                </div>
+                <span asp-validation-for="Credit" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DepartmentId" class="control-label"></label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">#</div>
+                    </div>
+                    <input asp-for="DepartmentId" class="form-control" type="text" readonly />
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="IsPracticed" class="control-label"></label>
+                @if (isExistClass.Count != 0)
+                {
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">#</div>
+                        </div>
+                        <input asp-for="IsPracticed" class="form-control" type="text" readonly />
+                    </div>
+                }
+                else
+                {
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">#</div>
+                        </div>
+                        <select asp-for="IsPracticed" class="form-control" asp-items="@selectList">
+                            <option value="">----Có thực hành hay không ?----</option>
+                            @* @if (Model.IsPracticed.Equals("Có thực hành"))
+                        {
+                        <option value="Có thực hành" selected="@(Model.IsPracticed.Equals("Có thực hành") ? "selected" : null)">Có thực hành</option>
+                        <option value="Lý thuyết" selected="@(Model.IsPracticed.Equals("Lý thuyết") ? "selected" : null)">Lý thuyết</option>
+                        } *@
+                        </select>
+                    </div>
+                }
+                <span asp-validation-for="IsPracticed" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-12 mt-3">
+                <input type="submit" value="Lưu" class="btn btn-danger ip-custom btn-custom" />
+            </div>
+        </form>
+    </div>
+</div>

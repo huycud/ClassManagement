@@ -1,0 +1,33 @@
+﻿@using ClassManagement.Mvc.Models.Subject
+@model List<SubjectViewModel>
+
+@foreach (var item in Model ?? new List<SubjectViewModel> { })
+{
+    <tr class="text-center subject-custom-td" id="@item.Id">
+        <td style="width:5%">@item.Id</td>
+        <td style="width:25%">@item.Name</td>
+        <td>@item.DepartmentId</td>
+        <td>@item.Credit</td>
+        <td>@item.Status</td>
+        <td>@item.IsPracticed</td>
+        <td>@item.UpdatedAt</td>
+        <td>
+            <a asp-action="GetClassesBySubjectId" asp-route-id="@item.Id" style="text-decoration: none">
+                Xem
+            </a>
+        </td>
+        <td style="white-space:nowrap; justify-content:center">
+            <div class="row justify-content-center">
+                <div class="col-4">
+                    <a class="btn btn-danger" onclick="showInPopup('@Url.Action("UpdateSubject","Subject",new {id=item.Id},Context.Request.Scheme)','Cập nhật')">
+                        <i class="fa fa-edit" aria-hidden="true"></i>
+                    </a>
+                </div>
+                @* <div class="col-4">
+
+            </div> *@
+            </div>
+        </td>
+    </tr>
+}
+

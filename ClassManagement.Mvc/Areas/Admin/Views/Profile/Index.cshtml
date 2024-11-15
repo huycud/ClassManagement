@@ -1,0 +1,23 @@
+﻿@model ClassManagement.Mvc.Models.Manager.AdminViewModel
+@{
+    ViewData["Title"] = "Thông tin cá nhân";
+
+    Layout = "_AdminLayout";
+}
+<div class="container">
+    <div class="card mt-3">
+        <div class="card-header" style="background-color: rgba(0, 0, 0, 0.03); height: 40px;">
+            <ol class="breadcrumb mb-3">
+                <li class="breadcrumb-item">
+                    <a asp-action="Index" asp-controller="Home">Bảng điều khiển</a>
+                </li>
+                <li class="breadcrumb-item active">
+                    Thông tin cá nhân
+                </li>
+            </ol>
+        </div>
+    </div>
+    <div class="card-body" id="profile">
+        @await Html.PartialAsync("_IndexPartialView", Model)
+    </div>
+</div>
