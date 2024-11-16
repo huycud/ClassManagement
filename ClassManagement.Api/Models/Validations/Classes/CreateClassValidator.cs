@@ -20,7 +20,9 @@ namespace ClassManagement.Api.Models.Validations.Classes
 
                 .NotNull().NotEmpty().WithMessage("Name required.")
 
-                .MaximumLength(255).WithMessage("Name must be less than 255 characters.");
+                .MaximumLength(255).WithMessage("Name must be less than 255 characters.")
+
+                .Matches(RegexConstants.VIETNAMESENAME).WithMessage("Name cannot be contain special characters.");
 
             RuleFor(x => x.ClassSize)
 

@@ -131,8 +131,6 @@ namespace ClassManagement.Api.Services.Departments
 
                 await init.ExecuteAsync(async () =>
                 {
-                    _appDbContext.Departments.Update(entity);
-
                     await _appDbContext.SaveChangesAsync();
 
                     await transaction.CommitAsync();

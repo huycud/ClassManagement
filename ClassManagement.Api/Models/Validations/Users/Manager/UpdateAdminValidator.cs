@@ -14,7 +14,7 @@ namespace ClassManagement.Api.Models.Validations.Users.Manager
 
                 .Length(2, 255).WithMessage("FirstName must greater than 2 characters and less than 255 characters.")
 
-                .Matches(RegexConstants.CLIENTNAME).WithMessage("Fullname must not contain special characters.");
+                .Matches(RegexConstants.VIETNAMESENAME).WithMessage("Fullname must not contain special characters.");
         }
     }
 }

@@ -141,8 +141,6 @@ namespace ClassManagement.Api.Services.Subjects
 
                 await init.ExecuteAsync(async () =>
                 {
-                    _appDbContext.Subjects.Update(entity);
-
                     await _appDbContext.SaveChangesAsync();
 
                     await transaction.CommitAsync();

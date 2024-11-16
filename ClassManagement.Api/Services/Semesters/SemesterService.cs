@@ -98,8 +98,6 @@ namespace ClassManagement.Api.Services.Semesters
 
                 await init.ExecuteAsync(async () =>
                 {
-                    _appDbContext.Semesters.Update(entity);
-
                     await _appDbContext.SaveChangesAsync();
 
                     await transaction.CommitAsync();

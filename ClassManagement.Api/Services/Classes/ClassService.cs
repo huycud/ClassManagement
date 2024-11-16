@@ -75,8 +75,6 @@ namespace ClassManagement.Api.Services.Classes
 
                 await init.ExecuteAsync(async () =>
                 {
-                    _appDbContext.Classes.Update(classEntity);
-
                     await _appDbContext.SaveChangesAsync();
 
                     await transaction.CommitAsync();
@@ -271,8 +269,6 @@ namespace ClassManagement.Api.Services.Classes
 
                 await init.ExecuteAsync(async () =>
                 {
-                    _appDbContext.Classes.Update(classEntity);
-
                     await _appDbContext.SaveChangesAsync();
 
                     await transaction.CommitAsync();

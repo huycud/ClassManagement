@@ -190,11 +190,11 @@ namespace ClassManagement.Api.Services.Users
 
                         ?? throw new BadRequestException(string.Format(ErrorMessages.NOT_FOUND, "Email"));
 
-            var resetPasswordToken = await _appDbContext.PasswordResetTokens
+            var resetPasswordToken = await _appDbContext.PasswordResetTokens.FirstOrDefaultAsync(x => x.ResetToken.Equals(request.Token, StringComparison.CurrentCultureIgnoreCase))
 
-                                    .AsNoTracking().FirstOrDefaultAsync(x => x.ResetToken.Equals(request.Token, StringComparison.CurrentCultureIgnoreCase) && !x.IsUsed);
+                        ?? throw new KeyNotFoundException(string.Format(ErrorMessages.NOT_FOUND, "Token"));
 
-            if (resetPasswordToken is null) throw new BadRequestException(string.Format(ErrorMessages.HAS_BEEN_USED, "Token"));
+            if (resetPasswordToken.IsUsed) throw new BadRequestException(string.Format(ErrorMessages.HAS_BEEN_USED, "Token"));
 
             var decodedToken = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(request.Token));
 
@@ -203,8 +203,6 @@ namespace ClassManagement.Api.Services.Users
             if (!result.IsCompletedSuccessfully) throw new BadRequestException(string.Format(ErrorMessages.WAS_EXPIRED, "Token"));
 
             resetPasswordToken.IsUsed = true;
-
-            _appDbContext.PasswordResetTokens.Update(resetPasswordToken);
 
             await _appDbContext.SaveChangesAsync();
 
