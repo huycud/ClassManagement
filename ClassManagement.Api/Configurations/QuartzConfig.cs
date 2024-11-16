@@ -28,8 +28,8 @@ namespace ClassManagement.Api.Configurations
                     .AddTrigger(trigger => trigger.ForJob(deleteExpiredResetTokenJobKey)
 
                                             .WithIdentity(JobConstants.DELETEEXPIREDRESETTOKEN_TRIGGER)
-
-                                            .WithCronSchedule("0 0 0 * * ?"));
+                                            .WithSimpleSchedule(x => x.WithIntervalInMinutes(5).RepeatForever()));
+                //.WithCronSchedule("0 0 0 * * ?"));
             });
 
             services.AddQuartzHostedService(opt => opt.WaitForJobsToComplete = true);

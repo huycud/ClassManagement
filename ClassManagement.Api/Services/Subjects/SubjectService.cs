@@ -30,7 +30,7 @@ namespace ClassManagement.Api.Services.Subjects
 
             var createSubjectEntity = _mapper.Map<Subject>(request);
 
-            _appDbContext.Subjects.Add(createSubjectEntity);
+            await _appDbContext.Subjects.AddAsync(createSubjectEntity);
 
             await _appDbContext.SaveChangesAsync();
 

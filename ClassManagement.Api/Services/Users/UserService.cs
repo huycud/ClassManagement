@@ -16,10 +16,6 @@ using Utilities.Handlers;
 using Utilities.Messages;
 using static Utilities.Enums.EnumTypes;
 
-// Các phương thức mà cà Admin, Teacher, Student đều sử dụng như:
-// Thay đổi mật khẩu
-// Thay đổi avatar
-
 namespace ClassManagement.Api.Services.Users
 {
     class UserService(AppDbContext appDbContext, IStorageService storageService, IMapper mapper, UserManager<User> userManager, IEmailService emailService,
@@ -149,9 +145,26 @@ namespace ClassManagement.Api.Services.Users
 
                         ?? throw new BadRequestException(string.Format(ErrorMessages.NOT_FOUND, "Email"));
 
-            var forgotPasswordToken = await _userManager.GeneratePasswordResetTokenAsync(entity);
+            var resetPasswordToken = await _userManager.GeneratePasswordResetTokenAsync(entity);
 
-            var encodedToken = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(forgotPasswordToken));
+            var passwordResetToken = new PasswordResetToken
+            {
+                UserId = entity.Id,
+
+                CreateAt = DateTime.UtcNow,
+
+                Expiration = DateTime.UtcNow.AddMinutes(59),
+
+                IsUsed = false,
+
+                ResetToken = resetPasswordToken
+            };
+
+            await _appDbContext.PasswordResetTokens.AddAsync(passwordResetToken);
+
+            await _appDbContext.SaveChangesAsync();
+
+            var encodedToken = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(resetPasswordToken));
 
             var resetPasswordUrl = string.Format(SystemConstants.RESET_PASSWORD_URL, _configuration["BaseAddress"], request.Email, encodedToken);
 
@@ -177,11 +190,23 @@ namespace ClassManagement.Api.Services.Users
 
                         ?? throw new BadRequestException(string.Format(ErrorMessages.NOT_FOUND, "Email"));
 
+            var resetPasswordToken = await _appDbContext.PasswordResetTokens
+
+                                    .AsNoTracking().FirstOrDefaultAsync(x => x.ResetToken.Equals(request.Token, StringComparison.CurrentCultureIgnoreCase) && !x.IsUsed);
+
+            if (resetPasswordToken is null) throw new BadRequestException(string.Format(ErrorMessages.HAS_BEEN_USED, "Token"));
+
             var decodedToken = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(request.Token));
 
             var result = _userManager.ResetPasswordAsync(entity, decodedToken, request.NewPassword);
 
-            if (!result.IsCompletedSuccessfully) return false;
+            if (!result.IsCompletedSuccessfully) throw new BadRequestException(string.Format(ErrorMessages.WAS_EXPIRED, "Token"));
+
+            resetPasswordToken.IsUsed = true;
+
+            _appDbContext.PasswordResetTokens.Update(resetPasswordToken);
+
+            await _appDbContext.SaveChangesAsync();
 
             return true;
         }

@@ -136,7 +136,7 @@ namespace ClassManagement.Api.Services.Classes
 
             else createClassEntity.Credit = subjectEntity.Credit - 1;
 
-            _appDbContext.Classes.Add(createClassEntity);
+            await _appDbContext.Classes.AddAsync(createClassEntity);
 
             await _appDbContext.SaveChangesAsync();
 

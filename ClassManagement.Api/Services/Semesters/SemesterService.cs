@@ -25,7 +25,7 @@ namespace ClassManagement.Api.Services.Semesters
 
             var createSemesterEntity = _mapper.Map<CreateSemesterRequest, Semester>(request);
 
-            _appDbContext.Semesters.Add(createSemesterEntity);
+            await _appDbContext.Semesters.AddAsync(createSemesterEntity);
 
             await _appDbContext.SaveChangesAsync();
 
