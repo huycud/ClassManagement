@@ -39,7 +39,7 @@ namespace ClassManagement.Api.Services.Notifies
 
             var createNotifyEntity = _mapper.Map<Notify>(request);
 
-            _appDbContext.Notifies.Add(createNotifyEntity);
+            await _appDbContext.Notifies.AddAsync(createNotifyEntity);
 
             await _appDbContext.SaveChangesAsync();
 
@@ -113,8 +113,6 @@ namespace ClassManagement.Api.Services.Notifies
 
                 await init.ExecuteAsync(async () =>
                 {
-                    _appDbContext.Notifies.Update(entity);
-
                     await _appDbContext.SaveChangesAsync();
 
                     await transaction.CommitAsync();
@@ -191,8 +189,6 @@ namespace ClassManagement.Api.Services.Notifies
 
                 await init.ExecuteAsync(async () =>
                 {
-                    _appDbContext.Notifies.Update(entity);
-
                     await _appDbContext.SaveChangesAsync();
 
                     await transaction.CommitAsync();

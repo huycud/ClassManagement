@@ -14,7 +14,7 @@ namespace ClassManagement.Api.Models.Validations.Users.Clients
 
                 .Length(2, 20).WithMessage("Firstname must greater than 2 characters and less than 20 characters.")
 
-                .Matches(RegexConstants.CLIENTNAME).WithMessage("Firstname must not contain special characters.");
+                .Matches(RegexConstants.VIETNAMESENAME).WithMessage("Firstname must not contain special characters.");
 
             RuleFor(x => x.Lastname)
 
@@ -22,7 +22,7 @@ namespace ClassManagement.Api.Models.Validations.Users.Clients
 
                 .Length(2, 20).WithMessage("Lastname must greater than 2 characters and less than 20 characters.")
 
-                .Matches(RegexConstants.CLIENTNAME).WithMessage("Lastname must not contain special characters.");
+                .Matches(RegexConstants.VIETNAMESENAME).WithMessage("Lastname must not contain special characters.");
 
             RuleFor(x => x.DateOfBirth)
 

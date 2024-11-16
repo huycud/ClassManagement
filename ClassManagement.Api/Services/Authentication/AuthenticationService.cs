@@ -2,23 +2,27 @@
 using System.Security.Claims;
 using System.Text;
 using ClassManagement.Api.Common.Exceptions;
+using ClassManagement.Api.Data.EF;
 using ClassManagement.Api.Data.Entities;
 using ClassManagement.Api.DTO.Authentication;
 using ClassManagement.Api.DTO.Common;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Utilities.Common;
 using Utilities.Messages;
 
 namespace ClassManagement.Api.Services.Authentication
 {
-    class AuthenticationService(UserManager<User> userManager, SignInManager<User> signInManager, IConfiguration configuration) : IAuthenticationService
+    class AuthenticationService(UserManager<User> userManager, SignInManager<User> signInManager, AppDbContext appDbContext, IConfiguration configuration) : IAuthenticationService
     {
         private readonly UserManager<User> _userManager = userManager;
 
         private readonly SignInManager<User> _signInManager = signInManager;
 
         private readonly IConfiguration _configuration = configuration;
+
+        private readonly AppDbContext _appDbContext = appDbContext;
 
         public async Task<Response> LoginAsync(LoginRequest request)
         {
@@ -45,30 +49,54 @@ namespace ClassManagement.Api.Services.Authentication
 
             if (!result.Succeeded) throw new BadRequestException(ErrorMessages.INVALID, "Password");
 
-            _ = int.TryParse(_configuration["ValidateJwt:AccessTokenValidityInMinutes"], out int accessTokenExpiresTime);
+            using var transaction = await _appDbContext.Database.BeginTransactionAsync();
 
-            _ = int.TryParse(_configuration["ValidateJwt:RefreshTokenValidityInMinutes"], out int refreshTokenExpiresTime);
-
-            var accessToken = await CreateTokenAsync(entity, accessTokenExpiresTime);
-
-            var refreshToken = await CreateTokenAsync(entity, refreshTokenExpiresTime);
-
-            var saveRefreshTokenResult = await _userManager.SetAuthenticationTokenAsync(entity, SystemConstants.LOGINPROVIDER_NAME, SystemConstants.REFRESHTOKEN_NAME, refreshToken);
-
-            if (!saveRefreshTokenResult.Succeeded) throw new BadRequestException(string.Format(ErrorMessages.INVALID, SystemConstants.REFRESHTOKEN_NAME));
-
-            return new Response()
+            try
             {
-                IsSuccess = true,
+                _ = int.TryParse(_configuration["ValidateJwt:AccessTokenValidityInMinutes"], out int accessTokenExpiresTime);
 
-                Message = string.Format(NotifyMessages.SUCCESS, "Login"),
+                _ = int.TryParse(_configuration["ValidateJwt:RefreshTokenValidityInMinutes"], out int refreshTokenExpiresTime);
 
-                AccessToken = accessToken,
+                var init = _appDbContext.Database.CreateExecutionStrategy();
 
-                RefreshToken = refreshToken,
+                return await init.ExecuteAsync(async () =>
+                {
+                    var resetTokens = _appDbContext.PasswordResetTokens.Where(x => x.UserId == entity.Id);
 
-                UserId = entity.Id
-            };
+                    _appDbContext.PasswordResetTokens.RemoveRange(resetTokens);
+
+                    await _appDbContext.SaveChangesAsync();
+
+                    var accessToken = await CreateTokenAsync(entity, accessTokenExpiresTime);
+
+                    var refreshToken = await CreateTokenAsync(entity, refreshTokenExpiresTime);
+
+                    var saveRefreshTokenResult = await _userManager.SetAuthenticationTokenAsync(entity, SystemConstants.LOGINPROVIDER_NAME, SystemConstants.REFRESHTOKEN_NAME, refreshToken);
+
+                    if (!saveRefreshTokenResult.Succeeded) throw new BadRequestException(string.Format(ErrorMessages.INVALID, SystemConstants.REFRESHTOKEN_NAME));
+
+                    await transaction.CommitAsync();
+
+                    return new Response()
+                    {
+                        IsSuccess = true,
+
+                        Message = string.Format(NotifyMessages.SUCCESS, "Login"),
+
+                        AccessToken = accessToken,
+
+                        RefreshToken = refreshToken,
+
+                        UserId = entity.Id
+                    };
+                });
+            }
+            catch (Exception e)
+            {
+                await transaction.RollbackAsync();
+
+                throw e;
+            }
         }
 
         public async Task<bool> LogoutAsync(int id)

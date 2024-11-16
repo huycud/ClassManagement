@@ -25,7 +25,7 @@ namespace ClassManagement.Api.Services.Semesters
 
             var createSemesterEntity = _mapper.Map<CreateSemesterRequest, Semester>(request);
 
-            _appDbContext.Semesters.Add(createSemesterEntity);
+            await _appDbContext.Semesters.AddAsync(createSemesterEntity);
 
             await _appDbContext.SaveChangesAsync();
 
@@ -98,8 +98,6 @@ namespace ClassManagement.Api.Services.Semesters
 
                 await init.ExecuteAsync(async () =>
                 {
-                    _appDbContext.Semesters.Update(entity);
-
                     await _appDbContext.SaveChangesAsync();
 
                     await transaction.CommitAsync();

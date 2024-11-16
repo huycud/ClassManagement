@@ -197,7 +197,7 @@ namespace ClassManagement.Api.Services.Users.Clients
 
                 var clientsInRoleEntities = await _userManager.GetUsersInRoleAsync(request.RoleName.ToUpper());
 
-                query = query.Where(x => clientsInRoleEntities.Select(c => c.Id).Equals(x.Id));
+                query = query.Where(x => clientsInRoleEntities.Select(c => c.Id).Contains(x.Id));
             }
 
             if (request.IsDisabled) query = query.Where(x => x.IsDisabled == request.IsDisabled);

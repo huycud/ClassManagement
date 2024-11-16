@@ -25,7 +25,7 @@ namespace ClassManagement.Api.Services.Departments
 
             var createDepartmentEntity = _mapper.Map<CreateDepartmentRequest, Department>(request);
 
-            _appDbContext.Departments.Add(createDepartmentEntity);
+            await _appDbContext.Departments.AddAsync(createDepartmentEntity);
 
             await _appDbContext.SaveChangesAsync();
 
@@ -131,8 +131,6 @@ namespace ClassManagement.Api.Services.Departments
 
                 await init.ExecuteAsync(async () =>
                 {
-                    _appDbContext.Departments.Update(entity);
-
                     await _appDbContext.SaveChangesAsync();
 
                     await transaction.CommitAsync();

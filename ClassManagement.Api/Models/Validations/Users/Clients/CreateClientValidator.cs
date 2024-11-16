@@ -38,7 +38,7 @@ namespace ClassManagement.Api.Models.Validations.Users.Clients
 
                 .Length(2, 255).WithMessage("Firstname must be more than 2 characters and less than 255 characters.")
 
-                .Matches(RegexConstants.CLIENTNAME).WithMessage("Firstname cannot be contain special characters.");
+                .Matches(RegexConstants.VIETNAMESENAME).WithMessage("Firstname cannot be contain special characters.");
 
             RuleFor(x => x.Lastname)
 
@@ -46,7 +46,7 @@ namespace ClassManagement.Api.Models.Validations.Users.Clients
 
                 .Length(2, 255).WithMessage("Lastname must be more than 2 characters and less than 255 characters.")
 
-                .Matches(RegexConstants.CLIENTNAME).WithMessage("Lastname cannot be contain special characters.");
+                .Matches(RegexConstants.VIETNAMESENAME).WithMessage("Lastname cannot be contain special characters.");
 
             RuleFor(x => x.Email)
 
