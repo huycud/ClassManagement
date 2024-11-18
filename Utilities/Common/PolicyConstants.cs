@@ -9,5 +9,9 @@
         public const string REQUIRELOWERROLES = "RequireLowerRoles";
 
         public const string REQUIRELOWESTROLES = "RequiredLowestRoles";
+
+        public const string IPRATELIMITING = "IpRateLimiting";
+
+        public const string GENERALRATELIMITING = "GeneralRateLimiting";
     }
 }

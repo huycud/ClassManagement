@@ -15,7 +15,7 @@ namespace ClassManagement.Mvc.Models.Class
         public string Subject { get; set; }
 
         [Display(Name = "Học kỳ")]
-        public string Scholastic { get; set; }
+        public string Semester { get; set; }
 
         [Display(Name = "Ngày bắt đầu")]
         [DataType(DataType.Date)]

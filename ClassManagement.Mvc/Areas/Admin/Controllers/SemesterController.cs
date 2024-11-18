@@ -43,14 +43,14 @@ namespace ClassManagement.Mvc.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public IActionResult CreateScholastic()
+        public IActionResult CreateSemester()
         {
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateScholastic(CreateSemesterViewModel model)
+        public async Task<IActionResult> CreateSemester(CreateSemesterViewModel model)
         {
             var result = await _semesterHttpClientService.CreateSemesterAsync(model);
 
@@ -65,7 +65,7 @@ namespace ClassManagement.Mvc.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> UpdateScholastic(string id)
+        public async Task<IActionResult> UpdateSemester(string id)
         {
             var entity = await _semesterHttpClientService.GetByIdAsync(id);
 
@@ -76,7 +76,7 @@ namespace ClassManagement.Mvc.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> UpdateScholastic(string id, UpdateSemesterViewModel model)
+        public async Task<IActionResult> UpdateSemester(string id, UpdateSemesterViewModel model)
         {
             var result = await _semesterHttpClientService.UpdateSemesterAsync(id, model);
 

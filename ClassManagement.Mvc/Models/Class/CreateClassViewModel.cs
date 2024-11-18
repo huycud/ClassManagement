@@ -26,7 +26,7 @@ namespace ClassManagement.Mvc.Models.Class
 
         [Display(Name = "Học kỳ")]
         [Required(ErrorMessage = "Vui lòng chọn học kỳ")]
-        public string ScholasticId { get; set; }
+        public string SemesterId { get; set; }
 
         [Display(Name = "Ngày bắt đầu")]
         [DataType(DataType.Date)]

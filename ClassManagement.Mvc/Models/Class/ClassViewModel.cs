@@ -27,7 +27,7 @@ namespace ClassManagement.Mvc.Models.Class
         public DateTime EndedAt { get; set; }
 
         [Display(Name = "Học kỳ")]
-        public string Scholastic { get; set; }
+        public string Semester { get; set; }
 
         [Display(Name = "Môn")]
         public string Subject { get; set; }
