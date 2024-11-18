@@ -36,7 +36,7 @@ namespace ClassManagement.Api.Configurations
 
             services.Configure<DataProtectionTokenProviderOptions>(options =>
             {
-                options.TokenLifespan = TimeSpan.FromMinutes(1);
+                options.TokenLifespan = TimeSpan.FromHours(1);
             });
         }
 

@@ -38,6 +38,9 @@ EmailConfig.ConfigureEmail(builder.Services, builder.Configuration);
 //Configuration the Quartz
 QuartzConfig.ConfigureQuartz(builder.Services);
 
+//Configuration the Rate Limiting
+RateLimitingConfig.ConfigureRateLimiting(builder.Services);
+
 var app = builder.Build();
 
 //Declare DB if not exist
@@ -84,6 +87,10 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.UseMiddleware<ExceptionHandler>();
+
+app.UseForwardedHeaders();
+
+app.UseRateLimiter();
 
 app.MapControllers();
 

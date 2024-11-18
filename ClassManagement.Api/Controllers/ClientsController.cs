@@ -185,6 +185,16 @@ namespace ClassManagement.Api.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Create A Token To Reset Password When Client Forgot Password
+        /// </summary>
+        /// <remarks>
+        /// Using a ForgotPasswordRequest model
+        /// </remarks>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        [AllowAnonymous]
         [HttpPost("forgot-password")]
         public async Task<IActionResult> ForgotPasswordAsync([FromBody] ForgotPasswordRequest request, CancellationToken cancellationToken)
         {
@@ -199,6 +209,15 @@ namespace ClassManagement.Api.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Reset Password
+        /// </summary>
+        /// <remarks>
+        /// Using a ResetPasswordRequest model
+        /// </remarks>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [AllowAnonymous]
         [HttpPost("reset-password")]
         public async Task<IActionResult> ResetPasswordAsync([FromBody] ResetPasswordRequest request)
         {

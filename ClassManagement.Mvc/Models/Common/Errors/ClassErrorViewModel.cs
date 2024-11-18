@@ -8,7 +8,7 @@
         public string? EndedAt { get; set; }
         public string? TeacherId { get; set; }
         public string? ClassType { get; set; }
-        public string? ScholasticId { get; set; }
+        public string? SemesterId { get; set; }
         public string? SubjectId { get; set; }
         public string? Amount { get; set; }
         public string? TheoryClass { get; set; }

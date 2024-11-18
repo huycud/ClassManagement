@@ -125,7 +125,7 @@ namespace ClassManagement.Mvc.Areas.Admin.Controllers
 
                 Subject = entity.Subject,
 
-                Scholastic = entity.Scholastic,
+                Semester = entity.Semester,
 
                 StartedAt = entity.StartedAt,
 
