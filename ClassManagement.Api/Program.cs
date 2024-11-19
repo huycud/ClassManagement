@@ -39,7 +39,7 @@ EmailConfig.ConfigureEmail(builder.Services, builder.Configuration);
 QuartzConfig.ConfigureQuartz(builder.Services);
 
 //Configuration the Rate Limiting
-RateLimitingConfig.ConfigureRateLimiting(builder.Services);
+RateLimiterConfig.ConfigureRateLimiter(builder.Services);
 
 var app = builder.Build();
 

@@ -1,4 +1,6 @@
-﻿namespace Utilities.Messages
+﻿using System.Collections.Generic;
+
+namespace Utilities.Messages
 {
     public static class ErrorMessages
     {
@@ -42,5 +44,8 @@
         public const string OVER_MAXIMUM_SIZE = "The {0} has exceeded the allowed size. Please use images with a size less than or equal to {1}.";
 
         public const string INVALID_PRACTICE = "Can not update {0} when class contain instance.";
+
+        //Rate Limiter
+        public const string EXCEEDEDRATELIMITING = "\"Error\":\"Rate limit exceeded. Please try again later.\"";
     }
 }
